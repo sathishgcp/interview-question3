@@ -1,0 +1,8 @@
+com.example.demo
+com.example.demo.exceptions
+com.example.demo.forum.api
+com.example.demo.forum.delegates
+com.example.demo.forum.exceptions
+com.example.demo.forum.model
+com.example.demo.forum.persistence
+com.example.demo.utils

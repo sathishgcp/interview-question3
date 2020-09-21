@@ -1,95 +1,46 @@
-Interview question
-==================
+Questions API for Forum System
+==============================
 
 
-This is a very basic spring-boot app. Run it (using `mvn spring-boot:run`) or your favorite IDE.
-Try the url `http://localhost:5000/greeting?name=David`, it should return the string: "Hello David".
+## Description
+ This project provides API for Questions and Reply entered by Users in our Community Forum.
+ It has 4 endpoints to save and retrieve questions posted in the forum.
 
-You should use this template to develop a forum system.
+## APIs List
+Following are the list of API endpoints created.
+1. Create Question:
+   Endpoint: http://localhost:5000/questions <br/>
+   Method  : POST
+2. Create Reply: <br/>
+   Endpoint: http://localhost:5000/questions/{questionId}/reply <br/>
+   Method: POST
+3. Get List of Questions:
+   Endpoint: http://localhost:5000/questions <br/>
+   Method  : GET
+4. Get Question Details: <br/>
+   Endpoint: http://localhost:5000/questions/{questionId} <br/>
+   Method: GET
+   
+All api definitions are found at swagger: `/api/questions-forum.yml`
 
-# Requirements
-We want to develop 4 APIs:
+## Build And Deployment
+ To run build and run the project you should have Java 8 and Maven install in your system.
+ To check if they are installed run the following commands. <br/>
+ `java -version` <br/>
+ `mvn -version`
+ 
+ To build project run: 
+ `mvn clean install`
+ 
+ To run the project: `mvn spring-boot:run `
+ 
+ ## Javadoc
+ Project Javadoc documentation is located at: `/javadoc/ `
 
-### Post new question: `http://localhost:5000/questions`
-with body:
-```json
-{
-  "author": "Daniel",
-  "message": "Message text"
-}
-```
-Response should be 201:
-```json
-{
-  "id": 1,
-  "author": "Daniel",
-  "message": "Message text",
-  "replies": 0
-}
-```
+## Junit Tests
+Unit tests and integration tests covers are scenarios and validations defined by the API. 
+Any change in source code requires a corresponding change in defined test cases.
 
-### Post a reply to a message: `http://localhost:5000/questions/{questionId}/reply`
-with body:
-```json
-{
-  "author": "Reply author",
-  "message": "Message reply text"
-}
-```
-Response should be 201:
-```json
-{
-  "questionId": 1,
-  "id": 5,
-  "author": "Reply author",
-  "message": "Message reply text"
-}
-```
-
-### Get a thread: `http://localhost:5000/questions/{questionId}`, 
-the response should look like:
-```json
-{
-  "id": 1,
-  "author": "Daniel",
-  "message": "Message text",
-  "replies": [
-    {
-       "id": 5,
-       "author": "Reply author",
-       "message": "Message reply text"
-    },
-    ...
-  ]
-}
-```
-
-### Get a list of questions: `http://localhost:5000/questions`
-The response should look like:
-```json
-[
-    {
-      "id": 1,
-      "author": "Daniel",
-      "message": "Message text",     
-      "replies": 0
-    },
-    ...
-]
-```
-
-## Guidelines
-* Fork this repository and push your commits
-* Use the spring-boot template given
-* Write unit-tests, integration-tests 
-  * Write in javadocs what scenarios are in test
-  * Higher coverage is better
-* Write code documentation
-* All classes given are meant to used as reference - once they are not needed, they can be removed.
-* This project uses [lombok](https://projectlombok.org/) - use it when possible
-* Properly organize your project with `.gitignore` file, `readme` file explaining how to run the project, etc.
-
-## Deliverables
-* Send us a link to a repository fulfilling the requirements.
-* Your code will be tested using different tests.
-* Successful implementation will move to interview.
+## Database
+For the purposes of easy testing and running application is configured to use In-memory H2 Database.
+ 

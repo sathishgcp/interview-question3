@@ -1,0 +1,186 @@
+swagger: "2.0"
+info:
+  description: "This is a simple API to store and retrive messages and replys in a forum."
+  version: "1.0.0"
+  title: "Swagger Forum API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "sathishkumar.pendem@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/questions"
+tags:
+- name: "QuestionsAndReplyController"
+  description: "QuestionsAndReplyController"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /questions:
+    post:
+      tags:
+      - "questions"
+      summary: "Create a new Question"
+      description: ""
+      operationId: "addQuestion"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New question to add to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/PostQuestionReplyBody"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/QuestionDetails'
+    get:
+      tags:
+      - "questions"
+      summary: "Get list of questions"
+      description: "Get List of Questions" 
+      operationId: "get list of questions"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/QuestionDetails"
+
+  /questions/{questionId}/reply:
+    post:
+      tags:
+      - "questions"
+      summary: "Post a new reply to a question"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "createReply"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"      
+      parameters:
+      - name: "questionId"
+        in: "path"
+        description: "ID of the question"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "requestBody"
+        in: "body"
+        description: "New question to add to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/PostQuestionReplyBody"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/PostReplyResponse'
+        "400":
+          description: "Invalid status value"
+  /questions/{questionId}:
+    get:
+      tags:
+      - "questions"
+      summary: "gGt question Details"
+      description: "Endpoint to get question details and all replies to the question"
+      operationId: "getQuestionDetails"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "questionId"
+        in: "path"
+        description: "ID of the question"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/QuestionsResponse"
+        "400":
+          description: "Invalid tag value"
+definitions:
+  QuestionDetails:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      author:
+        type: "string"
+        example: "doggie"
+      message:
+        type: "string"
+        description: "message text"
+      replies: 
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "QuestionDetails"
+  ReplyDetails:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      author:
+        type: "string"
+      message:
+        type: "string"
+  PostQuestionReplyBody:
+    type: "object"
+    properties:
+      author:
+        type: "string"
+      message:
+        type: "string"
+  PostReplyResponse:
+    type: "object"
+    properties:
+      questionId:
+        type: "integer"
+        format: "int32"
+      id:
+        type: "integer"
+        format: "int32"
+      author:
+        type: "string"
+      message:
+        type: "string"
+  QuestionsResponse:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      author:
+        type: "string"
+      message:
+        type: "string"
+      replies:
+        type: array
+        items:
+          $ref: '#/definitions/ReplyDetails'
+        
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
